@@ -1,5 +1,5 @@
 " Minimal vim plugin to visualize marks as sign.
-" Last Change: 2022 Jan 08
+" Last Change: 2022 Jan 09
 " Maintainer: oky-123 <oky123.ia@gmail.com>
 
 " Check if your vim supports signs
@@ -13,7 +13,7 @@ endif
 " let g:loaded_marksign_plugin = 1
 
 " Variables
-let g:marksign_signs_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^.'[]{}()0123456789"
+let g:marksign_marks_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^.'[]{}()0123456789"
 let g:marksign_enable_periodical_refresh = 1
 let g:marksign_sign_num = 1
 let g:marksign_sign_texthl = 'Label'

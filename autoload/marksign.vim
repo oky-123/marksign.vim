@@ -10,9 +10,9 @@ let s:signs_defined = 0
 function! s:define_signs()
     " White list letters
     let sign_list = []
-    for i in range(len(g:marksign_signs_to_show))
-        call add(sign_list, { "name": "Marksign_" . g:marksign_signs_to_show[i] . "_txt",
-            \ "text": g:marksign_signs_to_show[i],
+    for i in range(len(g:marksign_marks_to_show))
+        call add(sign_list, { "name": "Marksign_" . g:marksign_marks_to_show[i] . "_txt",
+            \ "text": g:marksign_marks_to_show[i],
             \ "texthl": g:marksign_sign_texthl })
     endfor
 
@@ -24,15 +24,15 @@ function! s:clear_signs()
     call sign_unplace('Marksign')
 endfunction
 
-" Place signs (Only marks defined in s:marksigns_to_show)
+" Place signs (Only marks defined in s:marksign_marks_to_show)
 function! s:place_sign_from_existing_marks(current_buf, mark_list, lnum_sign_placed)
     let mark_list = deepcopy(a:mark_list)
-    for i in range(len(g:marksign_signs_to_show))
-        let mark = g:marksign_signs_to_show[i]
+    for i in range(len(g:marksign_marks_to_show))
+        let mark = g:marksign_marks_to_show[i]
         " List of checked idx in mark_list
         let checked_idx = -1
 
-        " Place sign if the mark in mark_list is included in g:marksign_signs_to_show
+        " Place sign if the mark in mark_list is included in g:marksign_marks_to_show
         for j in range(len(mark_list))
             let m = mark_list[j]
             if m['mark'][1] ==# mark
