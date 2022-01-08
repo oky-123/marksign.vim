@@ -14,11 +14,12 @@ endif
 
 " variables
 let s:marksign_signs_to_show = "abcdefghijklmnopqrstuvwxyz.'^ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let s:marksign_sign_text_hl = 'Label'
+let s:marksign_sign_texthl = 'Label'
 let s:marksign_refresh_signs_periodically = 1
-let s:marksign_signs_priority = 0
+let s:marksign_sign_priority = 0
+
 
 " Set autocmd to refresh sign when cursor holding
 augroup marksign_autocmds
-    autocmd CursorHold * call marksign:refresh_signs()
+    autocmd CursorHold * call marksign#refresh_signs()
 augroup END

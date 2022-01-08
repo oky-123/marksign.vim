@@ -10,10 +10,10 @@ set cpo&vim
 function! s:define_signs()
     " White list letters
     let sign_list = []
-    for i in range(len(s:signs_to_show))
-        call add(sign_list, { "name": "ShowMarks_" . s:signs_to_show[i] . "_txt",
-            \ "text": s:signs_to_show[i],
-            \ "texthl": s:sign_text_hl })
+    for i in range(len(s:marksign_signs_to_show))
+        call add(sign_list, { "name": "ShowMarks_" . s:marksign_signs_to_show[i] . "_txt",
+            \ "text": s:marksign_signs_to_show[i],
+            \ "texthl": s:marksign_sign_texthl })
     endfor
 
     " Define signs
@@ -61,20 +61,21 @@ function! PrintMarkList()
     endfor
 endfunction
 
-" Place signs (Only marks defined in s:signs_to_show)
+" Place signs (Only marks defined in s:marksigns_to_show)
 function! s:place_sign_from_existing_marks(current_buf, mark_list, lnum_sign_placed)
     for m in a:mark_list
         let mark = m['mark'][1]
         let lnum = m['pos'][1]
 
         " Check if the mark is included in the white lists
-        if matchstr(escape(s:signs_to_show, '.'), escape(mark, '.')) == ''
+        if matchstr(escape(s:marksign_signs_to_show, '.'), escape(mark, '.')) == ''
             continue
         endif
 
         " If no sign has placed at the lnum, place the sign
         if !has_key(a:lnum_sign_placed, lnum)
-            call sign_place(0, 'ShowMarks', 'ShowMarks_' . mark . '_txt', a:current_buf, {'lnum' : lnum, 'priority': s:signs_priority})
+            call sign_place(0, 'ShowMarks', 'ShowMarks_' . mark . '_txt', a:current_buf,
+                \ {'lnum' : lnum, 'priority': s:marksign_sign_priority})
             let a:lnum_sign_placed[lnum] = 1
         endif
     endfor
