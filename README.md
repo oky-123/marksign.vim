@@ -1,6 +1,7 @@
 # marksign.vim
 
 Minimal plugin to visualize vim marks as signs.
+![marksign_vim](https://user-images.githubusercontent.com/28491158/148663429-9b2ba45d-a5f7-4046-bb5d-cbd337785f81.gif)
 
 ## Installation
 
