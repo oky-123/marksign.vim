@@ -12,16 +12,17 @@ Minimal plugin to visualize vim marks as signs.
 Plug 'oky-123/marksign.vim'
 ```
 
-### Using Vundle
+### Using Dein
 
-```vim
-Plugin 'oky-123/marksign.vim'
+```toml
+[[plugins]]
+repo = 'oky-123/marksign.vim'
 ```
 
-### Using NeoBundle
+or
 
 ```vim
-NeoBundle 'oky-123/marksign.vim'
+call dein#add('oky-123/marksign.vim')
 ```
 
 ## Feature
