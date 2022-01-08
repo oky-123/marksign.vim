@@ -91,6 +91,6 @@ let g:marksign_sign_priority = 0
 
 ## Other plugins for marks
 
-- [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim) ... `:Marks` command enables us to navigate placed marks fuzzy.
+- [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim) ... `:Marks` command enables us to reach placed marks using fuzzy finder.
 - [lotabout/skim.vim](https://github.com/lotabout/skim.vim) ... a fork of fzf.vim but for skim.
 - [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature) ... plugin for to display marks, but it can also navigate signs, and place custom signs.
