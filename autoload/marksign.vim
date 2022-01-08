@@ -1,14 +1,12 @@
-" Minimal vim plugin for visualize marks as sign.
-" Last Change: 2022 Jan 08
-" Maintainer: oky-123 <oky123.ia@gmail.com>
-
 " Avoid conflicts with the 'compatible' option.
 let s:save_cpo = &cpo
 set cpo&vim
+
+" Script variables
 let s:enable_periodical_refresh = 0
 let s:signs_defined = 0
 
-" Define signs used in VisibleMark
+" Define signs used in marksign.vim
 function! s:define_signs()
     " White list letters
     let sign_list = []
@@ -33,18 +31,19 @@ function! s:place_sign_from_existing_marks(current_buf, mark_list, lnum_sign_pla
         let mark = g:marksign_signs_to_show[i]
         " List of checked idx in mark_list
         let checked_idx = -1
-        " markについて、mark_list中に存在するか確認
+
+        " Place sign if the mark in mark_list is included in g:marksign_signs_to_show
         for j in range(len(mark_list))
-            " 一致するmarkは高々一つ
             let m = mark_list[j]
             if m['mark'][1] ==# mark
-                " 対応lineにsignがlimit分設定されていないことをチェック
                 let pos = m['pos'][1]
                 if !has_key(a:lnum_sign_placed, pos)
                     let a:lnum_sign_placed[pos] = 1
                     call sign_place(0, 'Marksign', 'Marksign_' . mark . '_txt', a:current_buf,
                         \ {'lnum' : pos, 'priority': g:marksign_sign_priority})
-                elseif a:lnum_sign_placed[pos] < 2
+                " 対応lineにsignがlimit分設定されていないことをチェック
+                " Check if the count of placed sign at pos is not greater than g:marksign_sign_num
+                elseif a:lnum_sign_placed[pos] < g:marksign_sign_num
                     let a:lnum_sign_placed[pos] += 1
                     call sign_place(0, 'Marksign', 'Marksign_' . mark . '_txt', a:current_buf,
                         \ {'lnum' : pos, 'priority': g:marksign_sign_priority})
@@ -76,7 +75,7 @@ function! marksign#refresh_signs()
     let lnum_sign_placed = {}
 
     " Get marks in this buffer
-    let global_mark_list = filter(getmarklist(), "current_buf == v:val['pos'][0]")
+    let global_mark_list = filter(getmarklist(), {idx, val -> val['pos'][0] == current_buf})
     let local_mark_list = getmarklist(current_buf)
 
     call s:clear_signs()
@@ -112,14 +111,14 @@ function! marksign#print_mark_list()
     let current_buf = bufnr('%')
     echo current_buf
 
-    let global_mark_list = filter(getmarklist(), "current_buf == v:val['pos'][0]")
-    echo "global_mark_list: "
+    let global_mark_list = filter(getmarklist(), {idx, val -> val['pos'][0] == current_buf})
+    echo 'global_mark_list: '
     for m in global_mark_list
         echo m
     endfor
 
     let local_mark_list = getmarklist(current_buf)
-    echo "local_mark_list: "
+    echo 'local_mark_list: '
     for m in local_mark_list
         echo m
     endfor
