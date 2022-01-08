@@ -1,25 +1,10 @@
-" Vim plugin for visualize marks as sign.
+" Minimal vim plugin for visualize marks as sign.
 " Last Change: 2022 Jan 08
 " Maintainer: oky-123 <oky123.ia@gmail.com>
 
-" Avoid side effects from 'compatible' option.
+" Avoid conflicts with the 'compatible' option.
 let s:save_cpo = &cpo
 set cpo&vim
-
-" Check if your vim supports signs
-if !has('signs') || &cp
-  finish
-endif
-
-" if exists('g:loaded_marksign')
-"   finish
-" endif
-" let g:loaded_marksign = 1
-
-let s:signs_to_show = "abcdefghijklmnopqrstuvwxyz.'^ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let s:sign_text_hl = 'Label'
-let s:refresh_signs_on_cursor_hold = 1
-let s:signs_priority = 0
 
 " Define signs used in VisibleMark
 function! s:define_signs()
@@ -37,7 +22,7 @@ endfunction
 call s:define_signs()
 
 " Refresh the display of signs
-function! s:refresh_signs()
+function! marksign#refresh_signs()
     " If current_buf is not writable, place no sign.
     let writable_current_buffer = &modifiable && !&readonly
     if !writable_current_buffer
@@ -60,6 +45,7 @@ function! s:refresh_signs()
     call s:place_sign_from_existing_marks(current_buf, global_mark_list + local_mark_list, lnum_sign_placed)
 endfunction
 
+" for debug
 function! PrintMarkList()
     let current_buf = bufnr('%')
     let global_mark_list = getmarklist()
@@ -94,10 +80,6 @@ function! s:place_sign_from_existing_marks(current_buf, mark_list, lnum_sign_pla
     endfor
 
 endfunction
-
-" Set autocmd to refresh sign when cursor holding
-autocmd CursorHold * if (s:refresh_signs_on_cursor_hold ) | call s:refresh_signs() | endif
-
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
