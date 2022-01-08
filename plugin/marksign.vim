@@ -7,13 +7,13 @@ if !has('signs') || &cp
   finish
 endif
 
-" if exists('g:loaded_marksign')
-"   finish
-" endif
-" let g:loaded_marksign_plugin = 1
+if exists('g:loaded_marksign')
+  finish
+endif
+let g:loaded_marksign_plugin = 1
 
 " Variables
-let g:marksign_marks_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^.'[]{}()0123456789"
+let g:marksign_marks_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^.'[]{}0123456789"
 let g:marksign_enable_periodical_refresh = 1
 let g:marksign_sign_num = 1
 let g:marksign_sign_texthl = 'Label'

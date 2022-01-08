@@ -66,6 +66,8 @@ let g:marksign_enable_periodical_refresh = 0
 
 ## Options
 
+Options and their default values.
+
 ```vim
 " mark list to show in signcolumn
 let g:marksign_marks_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^.'[]{}0123456789"
@@ -81,7 +83,7 @@ let g:marksign_sign_priority = 0
 
 ## Commands
 
-|Command                              |                           |
+| Command                             |                           |
 |------------------------------------ |---------------------------|
 | `:MarksignEnablePeriodicalRefresh`  | Enable auto sign refresh  |
 | `:MarksignDisablePeriodicalRefresh` | Disable auto sign refresh, and clear mark signs |
