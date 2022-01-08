@@ -19,5 +19,5 @@ let g:marksign_refresh_signs_periodically = 1
 let g:marksign_sign_priority = 0
 
 " Set enable periodical refresh
-command! MarkSignEnablePeriodicalRefresh call marksign#enable_periodical_refresh()
-command! MarkSignDisablePeriodicalRefresh call marksign#disable_periodical_refresh()
+command! MarksignEnablePeriodicalRefresh call marksign#enable_periodical_refresh()
+command! MarksignDisablePeriodicalRefresh call marksign#disable_periodical_refresh()
