@@ -5,7 +5,6 @@
 " Avoid conflicts with the 'compatible' option.
 let s:save_cpo = &cpo
 set cpo&vim
-
 let s:enable_periodical_refresh = 0
 let s:signs_defined = 0
 
@@ -27,6 +26,36 @@ function! s:clear_signs()
     call sign_unplace('Marksign')
 endfunction
 
+" Place signs (Only marks defined in s:marksigns_to_show)
+function! s:place_sign_from_existing_marks(current_buf, mark_list, lnum_sign_placed)
+    let mark_list = deepcopy(a:mark_list)
+    for i in range(len(g:marksign_signs_to_show))
+        let mark = g:marksign_signs_to_show[i]
+        " List of checked idx in mark_list
+        let checked_idx = -1
+        " markについて、mark_list中に存在するか確認
+        for j in range(len(mark_list))
+            " 一致するmarkは高々一つ
+            let m = mark_list[j]
+            if m['mark'][1] ==# mark
+                " 対応lineにsignがlimit分設定されていないことをチェック
+                let pos = m['pos'][1]
+                if !has_key(a:lnum_sign_placed, pos)
+                    let a:lnum_sign_placed[pos] = 1
+                    call sign_place(0, 'Marksign', 'Marksign_' . mark . '_txt', a:current_buf,
+                        \ {'lnum' : pos, 'priority': g:marksign_sign_priority})
+                elseif a:lnum_sign_placed[pos] < 2
+                    let a:lnum_sign_placed[pos] += 1
+                    call sign_place(0, 'Marksign', 'Marksign_' . mark . '_txt', a:current_buf,
+                        \ {'lnum' : pos, 'priority': g:marksign_sign_priority})
+                endif
+                let checked_idx = j
+                break
+            endif
+        endfor
+    endfor
+endfunction
+
 " Refresh the display of signs
 function! marksign#refresh_signs()
     if !s:signs_defined
@@ -46,51 +75,12 @@ function! marksign#refresh_signs()
     " Dict for placed sign
     let lnum_sign_placed = {}
 
-    " Get marks
-    let global_mark_list = filter(getmarklist(), "current_buf =~ v:val['pos'][0]")
+    " Get marks in this buffer
+    let global_mark_list = filter(getmarklist(), "current_buf == v:val['pos'][0]")
     let local_mark_list = getmarklist(current_buf)
 
     call s:clear_signs()
     call s:place_sign_from_existing_marks(current_buf, global_mark_list + local_mark_list, lnum_sign_placed)
-endfunction
-
-" for debug
-function! PrintMarkList()
-    let current_buf = bufnr('%')
-    echo current_buf
-
-    let global_mark_list = getmarklist()
-    echo "global_mark_list: "
-    for m in global_mark_list
-        echo m
-    endfor
-
-    let local_mark_list = getmarklist(current_buf)
-    echo "local_mark_list: "
-    for m in local_mark_list
-        echo m
-    endfor
-endfunction
-
-" Place signs (Only marks defined in s:marksigns_to_show)
-function! s:place_sign_from_existing_marks(current_buf, mark_list, lnum_sign_placed)
-    for m in a:mark_list
-        let mark = m['mark'][1]
-        let lnum = m['pos'][1]
-
-        " Check if the mark is included in the white lists
-        if matchstr(escape(g:marksign_signs_to_show, '.'), escape(mark, '.')) == ''
-            continue
-        endif
-
-        " If no sign has placed at the lnum, place the sign
-        if !has_key(a:lnum_sign_placed, lnum)
-            call sign_place(0, 'Marksign', 'Marksign_' . mark . '_txt', a:current_buf,
-                \ {'lnum' : lnum, 'priority': g:marksign_sign_priority})
-            let a:lnum_sign_placed[lnum] = 1
-        endif
-    endfor
-
 endfunction
 
 " Enable periodical refresh
@@ -115,6 +105,24 @@ function! marksign#disable_periodical_refresh()
         autocmd! marksign
         let s:enable_periodical_refresh = 0
     endif
+endfunction
+
+" for debug
+function! marksign#print_mark_list()
+    let current_buf = bufnr('%')
+    echo current_buf
+
+    let global_mark_list = filter(getmarklist(), "current_buf == v:val['pos'][0]")
+    echo "global_mark_list: "
+    for m in global_mark_list
+        echo m
+    endfor
+
+    let local_mark_list = getmarklist(current_buf)
+    echo "local_mark_list: "
+    for m in local_mark_list
+        echo m
+    endfor
 endfunction
 
 let &cpo = s:save_cpo

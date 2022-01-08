@@ -13,8 +13,8 @@ endif
 " let g:loaded_marksign_plugin = 1
 
 " Variables
-let g:marksign_signs_to_show = "0123456789abcdefghijklmnopqrstuvwxyz.'^[]ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let g:marksign_enable_periodical_refresh = 1
+let g:marksign_signs_to_show = "0123456789abcdefghijklmnopqrstuvwxyz.'^[]{}()ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let g:marksign_enable_periodical_refresh = 0
 let g:marksign_sign_texthl = 'Label'
 let g:marksign_sign_priority = 0
 
