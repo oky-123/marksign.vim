@@ -2,6 +2,20 @@
 " Last Change: 2022 Jan 08
 " Maintainer: oky-123 <oky123.ia@gmail.com>
 
+" Avoid side effects from 'compatible' option.
+let s:save_cpo = &cpo
+set cpo&vim
+
+" Check if your vim supports signs
+if !has('signs') || &cp
+  finish
+endif
+
+" if exists('g:loaded_marksign')
+"   finish
+" endif
+" let g:loaded_marksign = 1
+
 let s:signs_to_show = "abcdefghijklmnopqrstuvwxyz.'^ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 let s:sign_text_hl = 'Label'
 let s:refresh_signs_on_cursor_hold = 1
@@ -83,3 +97,7 @@ endfunction
 
 " Set autocmd to refresh sign when cursor holding
 autocmd CursorHold * if (s:refresh_signs_on_cursor_hold ) | call s:refresh_signs() | endif
+
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
