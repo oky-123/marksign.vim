@@ -29,6 +29,11 @@ endfunction
 
 " Refresh the display of signs
 function! marksign#refresh_signs()
+    if !s:signs_defined
+        call s:define_signs()
+        let s:signs_defined = 1
+    endif
+
     " If current_buf is not writable, place no sign.
     let writable_current_buffer = &modifiable && !&readonly
     if !writable_current_buffer
@@ -42,7 +47,7 @@ function! marksign#refresh_signs()
     let lnum_sign_placed = {}
 
     " Get marks
-    let global_mark_list = getmarklist()
+    let global_mark_list = filter(getmarklist(), "current_buf =~ v:val['pos'][0]")
     let local_mark_list = getmarklist(current_buf)
 
     call s:clear_signs()
@@ -52,6 +57,8 @@ endfunction
 " for debug
 function! PrintMarkList()
     let current_buf = bufnr('%')
+    echo current_buf
+
     let global_mark_list = getmarklist()
     echo "global_mark_list: "
     for m in global_mark_list

@@ -13,11 +13,16 @@ endif
 " let g:loaded_marksign_plugin = 1
 
 " Variables
-let g:marksign_signs_to_show = "abcdefghijklmnopqrstuvwxyz.'^ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let g:marksign_signs_to_show = "0123456789abcdefghijklmnopqrstuvwxyz.'^[]ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+let g:marksign_enable_periodical_refresh = 1
 let g:marksign_sign_texthl = 'Label'
-let g:marksign_refresh_signs_periodically = 1
 let g:marksign_sign_priority = 0
 
 " Set enable periodical refresh
 command! MarksignEnablePeriodicalRefresh call marksign#enable_periodical_refresh()
 command! MarksignDisablePeriodicalRefresh call marksign#disable_periodical_refresh()
+command! MarksignRefreshSigns call marksign#refresh_signs()
+
+if g:marksign_enable_periodical_refresh
+    call marksign#enable_periodical_refresh()
+endif
