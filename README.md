@@ -1,4 +1,4 @@
-# vim-marksign
+# marksign.vim
 
 Minimal plugin to visualize vim marks as signs.
 
