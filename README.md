@@ -2,60 +2,60 @@
 
 Minimal plugin to visualize vim marks as signs.
 
-mark機能を可視化するminimalなプラグインです。
+## Installation
 
-# Installation
-
-## Using vim-plug
+### Using vim-plug
 
 ```vim
 Plug 'oky-123/marksign.vim'
 ```
 
-## Using Vundle
+### Using Vundle
 
 ```vim
 Plugin 'oky-123/marksign.vim'
 ```
 
-## Using NeoBundle
+### Using NeoBundle
 
 ```vim
 NeoBundle 'oky-123/marksign.vim'
 ```
 
-# Feature
+## Feature
 
-- このプラグインはあなたのvimにマークを表示させるだけです。
-- 表示させるマークをカスタマイズできます。
-- 表示させるマークの個数・優先順位を設定できます。
-- 自動リフレッシュ機能を無効にして、あなたの好きなタイミングでリフレッシュすることができます。
+- This plugin will just show the marks in your vim.
+- You can customize the marks to be displayed.
+- You can set the number and priority of marks to show in the same line.
+- You can disable the auto refresh to display marks at your leisure.
 
-## 表示させるマークをカスタマイズする
+### Customize the marks to be displayed
 
-`g:marksign_marks_to_show`に表示させるマークのホワイトリストをセットすることで、表示を限定できます。
-また、同じ行に複数マークが設定された場合、`g:marksign_marks_to_show`に設定したマークの左から順に優先して`g:marksign_sign_num`個だけ表示します。
+You can set a whitelist for `g:marksign_marks_to_show` to limit the marks that are displayed as signs.
+Also, when multiple marks are set in the same line, only `g:marksign_sign_num` marks will be shown, with priority given to the marks set in `g:marksign_marks_to_show` from left to right.
 
 ```vim
-" HighPriority <- AB..Zab..z -> LowPriority
+" HighPriority <- ABC..Zabc..z -> LowPriority
 let g:marksign_marks_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 ```
 
-## 表示させるマーク数設定する
+### Set the number of marks in the same line
 
-`g:marksign_marks_to_show`に表示させるマーク数を設定できます。
-
-NOTE: vimオプションの`signcolumn`を設定することを推奨します。
+You can set the number of marks to be shown in `g:marksign_marks_to_show`.
+Note that it is recommended to set the vim option `signcolumn`.
 
 ```vim
-" 常に3つのサインカラムを表示する場合
+" always display three sign columns
 set signcolumn=yes:3
 
-" 自動でサインカラムを表示する場合
+" automatically display the sign column
 set signcolumn=auto
 ```
 
-## 自動リフレッシュを無効に
+### Disable auto refresh
+
+This plugin will keep updating the signature refresh automatically.
+If you want to disable it, you can set as follows.
 
 ```vim
 let g:marksign_enable_periodical_refresh = 0
@@ -64,31 +64,31 @@ let g:marksign_enable_periodical_refresh = 0
 :MarksignRefreshSigns
 ```
 
-# Options
+## Options
 
 ```vim
-" Mark list to show in signcolumn
+" mark list to show in signcolumn
 let g:marksign_marks_to_show = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz^.'[]{}0123456789"
-" 自動リフレッシュを有効にするかのフラグ
+" flag to enable auto refresh
 let g:marksign_enable_periodical_refresh = 1
-" 表示させるマーク数
+" number of marks to be desplayed in the same line
 let g:marksign_sign_num = 1
-" 表示させるマークのハイライトグループ
+" highlight groups of signs
 let g:marksign_sign_texthl = 'Label'
-" 表示するサインの優先度
+" priority of signs
 let g:marksign_sign_priority = 0
 ```
 
-# Commands
+## Commands
 
 |Command                              |                           |
 |------------------------------------ |---------------------------|
 | `:MarksignEnablePeriodicalRefresh`  | Enable auto sign refresh  |
-| `:MarksignDisablePeriodicalRefresh` | Disable auto sign refresh |
+| `:MarksignDisablePeriodicalRefresh` | Disable auto sign refresh, and clear mark signs |
 | `:MarksignRefreshSigns`             | Refresh signs             |
 
-# マーク操作を便利にするプラグイン
+## Other plugins for marks
 
-- [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim) ... `:Marks` command enables us to navigate marks fuzzy.
+- [junegunn/fzf.vim](https://github.com/junegunn/fzf.vim) ... `:Marks` command enables us to navigate placed marks fuzzy.
 - [lotabout/skim.vim](https://github.com/lotabout/skim.vim) ... a fork of fzf.vim but for skim.
-- [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature) ... plugin for to display marks, but it can also navigate to placed signs, and place custom signs.
+- [kshenoy/vim-signature](https://github.com/kshenoy/vim-signature) ... plugin for to display marks, but it can also navigate signs, and place custom signs.
