@@ -91,7 +91,7 @@ function! marksign#enable_periodical_refresh()
 
     if !s:enable_periodical_refresh
         augroup marksign
-            autocmd CursorHold * call marksign#refresh_signs()
+            autocmd CursorMoved,CursorMovedI * call marksign#refresh_signs()
         augroup END
         let s:enable_periodical_refresh = 1
     endif
