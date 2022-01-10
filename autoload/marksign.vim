@@ -90,9 +90,15 @@ function! marksign#enable_periodical_refresh()
     endif
 
     if !s:enable_periodical_refresh
-        augroup marksign
-            autocmd CursorHold * call marksign#refresh_signs()
-        augroup END
+        if has('nvim')
+          augroup marksign
+              autocmd CursorMoved,CursorMovedI * call marksign#refresh_signs()
+          augroup END
+        else
+          augroup marksign
+              autocmd CursorHold,CursorHoldI * call marksign#refresh_signs()
+          augroup END
+        end
         let s:enable_periodical_refresh = 1
     endif
 endfunction
